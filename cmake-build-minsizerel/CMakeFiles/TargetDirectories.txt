@@ -1,0 +1,3 @@
+C:/Users/jaroslavp/cpp_algs/cmake-build-minsizerel/CMakeFiles/main.dir
+C:/Users/jaroslavp/cpp_algs/cmake-build-minsizerel/CMakeFiles/edit_cache.dir
+C:/Users/jaroslavp/cpp_algs/cmake-build-minsizerel/CMakeFiles/rebuild_cache.dir
