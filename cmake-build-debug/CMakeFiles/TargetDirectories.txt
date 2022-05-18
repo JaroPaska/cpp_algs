@@ -1,3 +1,0 @@
-C:/Users/jaroslavp/cpp_algs/cmake-build-debug/CMakeFiles/main.dir
-C:/Users/jaroslavp/cpp_algs/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/jaroslavp/cpp_algs/cmake-build-debug/CMakeFiles/rebuild_cache.dir
