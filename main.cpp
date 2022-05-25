@@ -39,15 +39,6 @@ using vvc = vector<vc>;
 template <class T> using min_heap = priority_queue<T, vector<T>, greater<T>>;
 template <class T> using max_heap = priority_queue<T>;
 
-std::vector<long long> make_powers(int n, long long base, long long modulo) {
-    std::vector<long long> powers;
-    powers.reserve(n + 1);
-    powers.emplace_back(1);
-    for (int i = 0; i < n; i++)
-        powers.emplace_back(base * powers.back() % modulo);
-    return powers;
-}
-
 int main() {
 #ifdef NDEBUG
     ios::sync_with_stdio(0);
@@ -55,9 +46,11 @@ int main() {
 #endif
     cout << setprecision(numeric_limits<long double>::max_digits10) << fixed;
 
-    hash_set<int> s;
-    FOR (i, 0, 20)
-        s.insert(i);
-    LOG(s);
-    cout << timer.get() << endl;
+    int n;
+    cin >> n;
+
+    vvll d(n, vll(n));
+    cin >> d;
+
+
 }

@@ -4,6 +4,8 @@
 
 #pragma once
 
+#define _USE_MATH_DEFINES
+
 #include <array>
 #include <chrono>
 #include <concepts>
@@ -156,6 +158,11 @@ struct Printer {
         os << pair.sep;
         os << print(p.second);
         return os << pair.close;
+    }
+
+    template<class T, class... Args>
+    std::ostream& print_tuple(std::ostream& os, bool print_sep, const std::tuple<T, Args...>& t) const {
+
     }
 
     template<class InputIt>
@@ -464,14 +471,14 @@ std::ostream& log_pair(std::ostream& os, const std::pair<T1, T2>& p) {
 }
 
 template<typename T>
-std::ostream& log(std::ostream& os, bool b, T first) {
+std::ostream& log(std::ostream& os, bool b, T&& first) {
     if (b)
         os << ", ";
     return log_pair(os, first);
 }
 
 template<typename T, typename... Args>
-std::ostream& log(std::ostream& os, bool b, T first, Args&&... args) {
+std::ostream& log(std::ostream& os, bool b, T&& first, Args&&... args) {
     if (b)
         os << ", ";
     log_pair(os, first);
