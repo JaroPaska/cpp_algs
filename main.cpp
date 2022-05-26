@@ -46,10 +46,10 @@ int main() {
 #endif
     cout << setprecision(numeric_limits<long double>::max_digits10) << fixed;
 
-    queue<int> pq;
-    pq.push(3);
-    pq.push(1);
-    pq.push(4);
-    pq.push(1);
+    min_heap<pi> pq;
+    pq.push({3, 1});
+    pq.push({1, 4});
+    pq.push({4, 1});
+    pq.push({1, 5});
     LOG(pq);
 }

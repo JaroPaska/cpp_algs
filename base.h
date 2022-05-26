@@ -206,7 +206,17 @@ struct Printer {
     }
 
     template<class T1, class T2>
+    std::ostream& print(std::ostream& os, std::pair<T1, T2>& p) const {
+        return print_pair(os, p);
+    }
+
+    template<class T1, class T2>
     std::ostream& print(std::ostream& os, const std::pair<T1, T2>& p) const {
+        return print_pair(os, p);
+    }
+
+    template<class T1, class T2>
+    std::ostream& print(std::ostream& os, std::pair<T1, T2>&& p) const {
         return print_pair(os, p);
     }
 
