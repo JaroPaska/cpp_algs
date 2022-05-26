@@ -46,11 +46,10 @@ int main() {
 #endif
     cout << setprecision(numeric_limits<long double>::max_digits10) << fixed;
 
-    int n;
-    cin >> n;
-
-    vvll d(n, vll(n));
-    cin >> d;
-
-
+    queue<int> pq;
+    pq.push(3);
+    pq.push(1);
+    pq.push(4);
+    pq.push(1);
+    LOG(pq);
 }

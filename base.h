@@ -14,10 +14,12 @@
 #include <iostream>
 #include <list>
 #include <map>
+#include <optional>
 #include <queue>
 #include <random>
 #include <set>
 #include <stack>
+#include <string>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -147,32 +149,27 @@ struct Fmt {
 };
 
 struct Printer {
-    Fmt pair;
+    Fmt tuple;
     Fmt list;
     Fmt dict;
 
     template<class T1, class T2>
     std::ostream& print_pair(std::ostream& os, const std::pair<T1, T2>& p) const {
-        os << pair.open;
-        os << print(p.first);
-        os << pair.sep;
-        os << print(p.second);
-        return os << pair.close;
-    }
-
-    template<class T, class... Args>
-    std::ostream& print_tuple(std::ostream& os, bool print_sep, const std::tuple<T, Args...>& t) const {
-
+        os << tuple.open;
+        print(os, p.first);
+        os << tuple.sep;
+        print(os, p.second);
+        return os << tuple.close;
     }
 
     template<class InputIt>
     std::ostream& print_list(std::ostream& os, InputIt first, InputIt last) const {
         os << list.open;
-        for (bool b = false; first != last; ++first) {
-            if (b)
+        for (bool print_sep = false; first != last; ++first) {
+            if (print_sep)
                 os << list.sep;
             print(os, *first);
-            b = true;
+            print_sep = true;
         }
         return os << list.close;
     }
@@ -180,11 +177,11 @@ struct Printer {
     template<class InputIt>
     std::ostream& print_set(std::ostream& os, InputIt first, InputIt last) const {
         os << dict.open;
-        for (bool b = false; first != last; ++first) {
-            if (b)
+        for (bool print_sep = false; first != last; ++first) {
+            if (print_sep)
                 os << dict.sep;
             print(os, *first);
-            b = true;
+            print_sep = true;
         }
         return os << dict.close;
     }
@@ -192,13 +189,13 @@ struct Printer {
     template<class InputIt>
     std::ostream& print_dict(std::ostream& os, InputIt first, InputIt last) const {
         os << dict.open;
-        for (bool b = false; first != last; ++first) {
-            if (b)
+        for (bool print_sep = false; first != last; ++first) {
+            if (print_sep)
                 os << dict.sep;
             print(os, first->first);
             os << dict.key_val_sep;
             print(os, first->second);
-            b = true;
+            print_sep = true;
         }
         return os << dict.close;
     }
@@ -219,12 +216,32 @@ struct Printer {
     }
 
     template<class T, class Allocator>
+    std::ostream& print(std::ostream& os, std::vector<T, Allocator>& v) const {
+        return print_list(os, v.begin(), v.end());
+    }
+
+    template<class T, class Allocator>
     std::ostream& print(std::ostream& os, const std::vector<T, Allocator>& v) const {
         return print_list(os, v.begin(), v.end());
     }
 
     template<class T, class Allocator>
+    std::ostream& print(std::ostream& os, std::vector<T, Allocator>&& v) const {
+        return print_list(os, v.begin(), v.end());
+    }
+
+    template<class T, class Allocator>
+    std::ostream& print(std::ostream& os, std::deque<T, Allocator>& d) const {
+        return print_list(os, d.begin(), d.end());
+    }
+
+    template<class T, class Allocator>
     std::ostream& print(std::ostream& os, const std::deque<T, Allocator>& d) const {
+        return print_list(os, d.begin(), d.end());
+    }
+
+    template<class T, class Allocator>
+    std::ostream& print(std::ostream& os, std::deque<T, Allocator>&& d) const {
         return print_list(os, d.begin(), d.end());
     }
 
@@ -463,23 +480,23 @@ std::ostream& operator<<(std::ostream& os,
 
 #endif
 
-template<class T1, class T2>
-std::ostream& log_pair(std::ostream& os, const std::pair<T1, T2>& p) {
+template<class T>
+std::ostream& log_pair(std::ostream& os, T&& p) {
     pretty_printer.print(os, p.first);
     os << " = ";
     return pretty_printer.print(os, p.second);
 }
 
 template<typename T>
-std::ostream& log(std::ostream& os, bool b, T&& first) {
-    if (b)
+std::ostream& log(std::ostream& os, bool print_sep, T&& first) {
+    if (print_sep)
         os << ", ";
     return log_pair(os, first);
 }
 
 template<typename T, typename... Args>
-std::ostream& log(std::ostream& os, bool b, T&& first, Args&&... args) {
-    if (b)
+std::ostream& log(std::ostream& os, bool print_sep, T&& first, Args&&... args) {
+    if (print_sep)
         os << ", ";
     log_pair(os, first);
     return log(os, true, args...);
