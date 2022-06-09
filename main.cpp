@@ -14,12 +14,6 @@
 #define MP make_pair
 #define MT make_tuple
 
-#ifndef NDEBUG
-#define newline std::endl
-#else
-#define newline '\n'
-#endif
-
 using namespace std;
 
 using pi = pair<int, int>;
@@ -36,20 +30,27 @@ using ull = unsigned long long;
 using vc = vector<char>;
 using vvc = vector<vc>;
 
-template <class T> using min_heap = priority_queue<T, vector<T>, greater<T>>;
-template <class T> using max_heap = priority_queue<T>;
+template<class T>
+using min_heap = priority_queue<T, vector<T>, greater<T>>;
+
+template<class T>
+using max_heap = priority_queue<T>;
+
+constexpr bool endl = false; // used to discourage use of endl
+constexpr char newl = '\n';  // use newl instead
 
 int main() {
-#ifdef NDEBUG
+#ifdef SYNC_IO
     ios::sync_with_stdio(0);
     cin.tie(0);
 #endif
     cout << setprecision(numeric_limits<long double>::max_digits10) << fixed;
+    cout << boolalpha;
 
-    min_heap<pi> pq;
-    pq.push({3, 1});
-    pq.push({1, 4});
-    pq.push({4, 1});
-    pq.push({1, 5});
-    LOG(pq);
+    vector<short> v;
+    for (int i = 0; i < 12; ++i) {
+        v.push_back(rng::get<short>());
+    }
+    ranges::sort(v);
+    LOG(v);
 }
